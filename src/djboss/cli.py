@@ -63,6 +63,21 @@ def find_all_commands(apps):
 
 
 def main():
+    if '--no-eventlet' not in sys.argv:
+        import eventlet
+        import eventlet.debug
+
+        os.environ["EVENTLET_NOPATCH"] = 'True'
+        eventlet.monkey_patch()
+        eventlet.monkey_patch(MySQLdb=True)
+        eventlet.debug.hub_prevent_multiple_readers(False)
+        
+        if '--blocking-detection' in sys.argv:
+            eventlet.debug.hub_blocking_detection(True)
+            print "Eventlet blocking detection enabled."
+        
+        print "This is a special green version of djboss.\n"
+    
     try:
         settings = get_settings()
     except SettingsImportError, exc:

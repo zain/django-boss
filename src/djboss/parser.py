@@ -20,7 +20,8 @@ PARSER = argparse.ArgumentParser(
 
 
 PARSER.add_argument('--version', action='version', version=djboss.__version__)
-
+PARSER.add_argument('--no-eventlet', action="store_true")
+PARSER.add_argument('--blocking-detection', action="store_true")
 
 PARSER.add_argument('-l', '--log-level', metavar='LEVEL',
     default='WARN', choices='DEBUG INFO WARN ERROR'.split(),
